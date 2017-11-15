@@ -1,3 +1,6 @@
+// TUTORIAL LINK
+// https://medium.com/gitconnected/react-ethereum-getting-started-with-the-minimum-toolset-required-part-3-of-4-6f8c55c751f5
+
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
