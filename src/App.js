@@ -2,9 +2,8 @@
 // https://medium.com/gitconnected/react-ethereum-getting-started-with-the-minimum-toolset-required-part-3-of-4-6f8c55c751f5
 
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import token from './token';
+import { token, address } from './ether';
 
 class App extends Component {
   constructor(props) {
@@ -12,12 +11,8 @@ class App extends Component {
 
     const MyContract = window.web3.eth.contract(token);
 
-    console.log('MyContract', MyContract);
-
     this.state = {
-      ContractInstance: MyContract.at(
-        '0x905841e39de04970fb8db1ad9dde3b73d62b84be'
-      )
+      ContractInstance: MyContract.at(address)
     };
 
     this.querySecret = this.querySecret.bind(this);

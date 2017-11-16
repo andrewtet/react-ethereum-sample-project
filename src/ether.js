@@ -1,3 +1,4 @@
+const address = '0x7cc87d96cd86362c57462f7c8ae0446dc1f830ab';
 const token = [
   {
     constant: true,
@@ -53,4 +54,4 @@ const token = [
   { payable: true, stateMutability: 'payable', type: 'fallback' }
 ];
 
-export default token;
+export { token, address };
