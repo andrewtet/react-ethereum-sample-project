@@ -1,5 +1,14 @@
-const address = '0x7cc87d96cd86362c57462f7c8ae0446dc1f830ab';
+const address = '0xe5d1b25453416e400cca7cf899fe157ee222b026';
 const token = [
+  {
+    constant: false,
+    inputs: [],
+    name: 'setExperimentInMotion',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: true,
+    stateMutability: 'payable',
+    type: 'function'
+  },
   {
     constant: true,
     inputs: [],
@@ -39,6 +48,15 @@ const token = [
   {
     constant: true,
     inputs: [],
+    name: 'psudeoRandomResult',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [],
     name: 'you_awesome',
     outputs: [{ name: '', type: 'string' }],
     payable: false,
@@ -51,7 +69,13 @@ const token = [
     stateMutability: 'nonpayable',
     type: 'constructor'
   },
-  { payable: true, stateMutability: 'payable', type: 'fallback' }
+  { payable: true, stateMutability: 'payable', type: 'fallback' },
+  {
+    anonymous: false,
+    inputs: [{ indexed: false, name: 'result', type: 'bool' }],
+    name: 'ExperimentComplete',
+    type: 'event'
+  }
 ];
 
 export { token, address };

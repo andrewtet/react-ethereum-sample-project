@@ -14,9 +14,7 @@ class App extends Component {
     this.state = {
       ContractInstance: MyContract.at(address)
     };
-
-    this.querySecret = this.querySecret.bind(this);
-    this.queryState = this.queryState.bind(this);
+    this.state.event = this.state.ContractInstance.ExperimentComplete();
   }
 
   querySecret() {
@@ -45,6 +43,29 @@ class App extends Component {
     });
   }
 
+  queryConditionResult() {
+    const { psudeoRandomResult } = this.state.ContractInstance;
+
+    psudeoRandomResult((err, result) => {
+      alert('Psudeo Random Result: ' + result);
+    });
+  }
+
+  activateExperiment() {
+    const { setExperimentInMotion } = this.state.ContractInstance;
+
+    setExperimentInMotion(
+      {
+        gas: 300000,
+        from: window.web3.eth.accounts[0],
+        value: window.web3.toWei(0.01, 'ether')
+      },
+      (err, result) => {
+        console.log('Experiment set in motion');
+      }
+    );
+  }
+
   handleInputChange(e) {
     this.setState({
       contractState: e.target.value
@@ -56,10 +77,6 @@ class App extends Component {
 
     const { setState } = this.state.ContractInstance;
     const { contractState: newState } = this.state;
-
-    console.log('SET STATE', setState);
-    console.log('CONTRACT STATE', this.state.contractState);
-    console.log('NEW STATE', newState);
 
     setState(
       newState,
@@ -75,15 +92,22 @@ class App extends Component {
   }
 
   render() {
+    this.state.event.watch((err, event) => {
+      if (err) {
+        console.error('An error occured in the watch event', err);
+      }
+      console.log('This is the event', event);
+      console.log('This is the result', event.args.result);
+    });
     return (
       <div className="app">
         <p>This is an app</p>
         <br />
         <br />
-        <button onClick={this.querySecret}>Get Secret</button>
+        <button onClick={this.querySecret.bind(this)}>Get Secret</button>
         <br />
         <br />
-        <button onClick={this.queryState}>Get State</button>
+        <button onClick={this.queryState.bind(this)}>Get State</button>
         <br />
         <br />
         <span style={{ marginRight: '6px' }}>New State:</span>
@@ -99,6 +123,16 @@ class App extends Component {
           onClick={this.handleContractStateSubmit.bind(this)}
         >
           Set State
+        </button>
+        <br />
+        <br />
+        <button onClick={this.queryConditionResult.bind(this)}>
+          Query Smart Contract Conditional Result
+        </button>
+        <br />
+        <br />
+        <button onClick={this.activateExperiment.bind(this)}>
+          Run Smart Contract Conditionl Experiment
         </button>
       </div>
     );
